@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "fillit.h"
-
+/*
 static void adjust_coordinates(int **data, int i)
 {
 	if (*data[i] == -1)
@@ -19,26 +19,26 @@ static void adjust_coordinates(int **data, int i)
 	*data[i] = *data[i] - *data[0];
 	adjust_coordinates(data, ++i);
 }
-
-static void	set_coordinates(int **data, char **tet, int i)
+*/
+static void	set_coordinates(int data[11], char tet[5][5], int i)
 {
 	if (i == 16)
 		return ;
 	if (tet[i / 4][i % 4] == '#')
 	{
-		i % 4 < *data[0] ? *data[0] = i % 4 : 0;
-		i / 4 < *data[1] ? *data[1] = i / 4 : 0;
+		i % 4 < data[0] ? data[0] = i % 4 : 0;
+		i / 4 < data[1] ? data[1] = i / 4 : 0;
 	}
-	set_coordinates(data, i + 1);
+	set_coordinates(data, tet, i + 1);
 	if (tet[i / 4][i % 4] == '#')
 	{
-		if (i / 4 != i + 1 / 4 || tet[(i + 1) / 4][(i + 1) % 4] == '.')
-			*data[((i / 4) - data[1]) * 2 + 3] = i % 4 - *data[0];
-		if (i / 4 != i - 1 / 4 || tet[(i - 1) / 4][(i - 1) % 4] == '.')
-			*data[((i / 4) - data[1]) * 2 + 2] = i % 4 - *data[0];
+		if (i / 4 != (i + 1) / 4 || tet[(i + 1) / 4][(i + 1) % 4] == '.')
+			data[((i / 4) - data[1]) * 2 + 3] = i % 4 - data[0];
+		if (i / 4 != (i - 1) / 4 || tet[(i - 1) / 4][(i - 1) % 4] == '.')
+			data[((i / 4) - data[1]) * 2 + 2] = i % 4 - data[0];
 	}
 }
-
+/*
 static void	set_coordinates(int **data, char **tet)
 {
 	int		y;
@@ -66,20 +66,19 @@ static void	set_coordinates(int **data, char **tet)
 	}
 	adjust_coordinates(data, 2);
 }
-
+*/
 static void data_init(int data[27][11])
 {
 	int		y;
 	int		x;
 
-	y = 28;
-	x = 12;
+	y = 27;
+	x = 11;
 	while (y--)
 	{
 		while (x--)
-			data[y][x] = x > 2 ? 3 : -1;
-		if (x)
-			x = 12;
+			data[y][x] = x < 2 ? 3 : -1;
+		x = 11;
 	}
 }
 /*
@@ -109,15 +108,15 @@ static int	get_next_tet(int fd, char tet[5][5])
 
 	i = -1;
 	line = 0;
-	while (i++ < 5)
+	while (++i < 5)
 	{
 		if ((ret = get_next_line(fd, &line)) == -1)
 			return (-1);
 		if (!ret)
 			return (!i ? 0 : -1);
-		if (i == 5 && *line != 0)
+		if (i == 4 && *line != 0)
 			return (-1);
-		else if (ft_strlen(line) != 4)
+		if (i != 4 && ft_strlen(line) != 4)
 			return (-1);
 		ft_strcpy(tet[i], line);
 		ft_strdel(&line);
@@ -138,11 +137,15 @@ static int	get_data(fd)
 	{
 		if (ret == -1)
 			return (1);
-		if (is_error(tet))
+//		if (is_error(tet))
+//			return (1);
+		if (i > 26)
 			return (1);
-		if (i > 27)
-			return (1);
-//		set_coordinates(&data[i++], tet);
+		set_coordinates(data[i++], tet, 0);
+		ret = 0;//
+		while (data[i - 1][ret] != -1)//
+			printf("%d", data[i - 1][ret++]);//
+		printf("\n");//
 	}
 	return (0);
 
@@ -155,9 +158,9 @@ static void	opener(char **av)
 
 	if ((fd = open(*av, O_RDONLY)) == -1)
 		ft_putstr("error\n");
-	if (get_data(fd))
+	else if (get_data(fd))
 		ft_putstr("error\n");
-	if (close(fd) == -1)
+	else if (close(fd) == -1)
 		ft_putstr("error\n");
 }
 
