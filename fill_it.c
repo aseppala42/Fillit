@@ -6,7 +6,7 @@
 /*   By: aseppala <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 20:59:43 by aseppala          #+#    #+#             */
-/*   Updated: 2019/12/17 21:31:24 by aseppala         ###   ########.fr       */
+/*   Updated: 2019/12/17 23:50:14 by aseppala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char		*fill_it(int data[27][11], int map_size)
 	if (!(map = ft_strnew(map_size * (map_size + 1))))
 		return (0);
 	init_fillit(map, map_size, 0);
-	while (data[i][0] != 3 || data[i][1] != 3)
+	while (data[i][0] != -1)
 	{
 		j = 2;
 		while (data[i][j] != -1)

@@ -6,7 +6,7 @@
 /*   By: aseppala <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:48:04 by aseppala          #+#    #+#             */
-/*   Updated: 2019/12/17 20:00:11 by aseppala         ###   ########.fr       */
+/*   Updated: 2019/12/17 22:57:42 by aseppala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ static int	get_next_tet(int fd, char tet[5][5])
 int			get_data(int fd, int data[27][11])
 {
 	int		ret;
-	int		temp; //
 	int		i;
 	char	tet[5][5];
 
@@ -117,11 +116,10 @@ int			get_data(int fd, int data[27][11])
 		if (i > 26)
 			return (1);
 		set_coordinates(data[i++], tet, 0);
-		temp = 0;//
-		while (data[i - 1][temp] != -1)//
-			printf("%d", data[i - 1][temp++]);//
-		printf("\n");//
 		if (ret == 0)
+		{
+			data[i][0] = -1;
 			return (0);
+		}
 	}
 }
