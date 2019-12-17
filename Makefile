@@ -6,38 +6,34 @@
 #    By: aseppala <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/21 10:09:10 by aseppala          #+#    #+#              #
-#    Updated: 2019/12/17 16:58:28 by aseppala         ###   ########.fr        #
+#    Updated: 2019/12/17 21:22:37 by aseppala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fillit
+FLAGS = -Wall -Wextra -Werror
+SRC = main.c get_next_line.c get_data.c remove_overlap.c fill_it.c
+OBJ = $(SRC:.c=.o)
+HDR = libft/includes
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re debug
 
 all: $(NAME)
 
 $(NAME):
 	make -C libft/ fclean && make -C libft/
-	clang -Wall -Wextra -Werror -I libft/includes -o get_next_line.o -c get_next_line.c
-	clang -Wall -Wextra -Werror -I libft/includes -o main.o -c main.c
-	clang -o $(NAME) main.o get_next_line.o -I libft/includes -L libft/ -lft
+	clang $(FLAGS) -I $(HDR) -c $(SRC)
+	clang -o $(NAME) $(OBJ) -I $(HDR) -L libft/ -lft
 
 clean:
-	rm -f get_next_line.o main.o
-
-debug:
-	make -C libft/ fclean && make -C libft/
-	clang -g -Wall -Wextra -Werror -I libft/includes -o get_next_line.o -c get_next_line.c
-	clang -g -Wall -Wextra -Werror -I libft/includes -o main.o -c main.c
-	clang -g -o $(NAME) main.o get_next_line.o -I libft/includes -L libft/ -lft
-
-debugsp:
-	make -C libft/ fclean && make -C libft/
-	clang -g -Wall -Wextra -Werror -I libft/includes -o get_next_line.o -c get_next_line.c
-	clang -g -Wall -Wextra -Werror -I libft/includes -o main.o -c complete_spaghetti.c
-	clang -g -o debugsp main.o get_next_line.o -I libft/includes -L libft/ -lft
+	rm -f $(OBJ)
 
 fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+debug:
+	make -C libft/ fclean && make -C libft/
+	clang -g $(FLAGS) -I $(HDR) -c $(SRC)
+	clang -g -o $(NAME) $(OBJ) -I $(HDR) -L libft/ -lft
