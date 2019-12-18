@@ -45,7 +45,7 @@ static int	is_error(char tet[5][5], int num_filled, int num_con, int i)
 		num_con += i % 4 ? tet[i / 4][i % 4 - 1] == '#' : 0;
 		num_con += i % 4 < 3 ? tet[i / 4][i % 4 + 1] == '#' : 0;
 	}
-	else if (tet[1 / 4][i % 4] != '.')
+	else if (tet[i / 4][i % 4] != '.')
 		return (0);
 	return (is_error(tet, num_filled, num_con, i + 1));
 }
