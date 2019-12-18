@@ -6,7 +6,7 @@
 /*   By: aseppala <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:48:04 by aseppala          #+#    #+#             */
-/*   Updated: 2019/12/17 22:57:42 by aseppala         ###   ########.fr       */
+/*   Updated: 2019/12/18 02:01:54 by aseppala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,10 @@ static int	get_next_tet(int fd, char tet[5][5])
 		if ((ret = get_next_line(fd, &line)) == -1)
 			return (-1);
 		if (!ret)
+		{
+			ft_strdel(&line);
 			return (i == 4 ? 0 : -1);
+		}
 		if (i == 4 && *line != 0)
 			return (-1);
 		if (i != 4 && ft_strlen(line) != 4)
@@ -95,6 +98,7 @@ static int	get_next_tet(int fd, char tet[5][5])
 		ft_strcpy(tet[i], line);
 		ft_strdel(&line);
 	}
+	ft_strdel(&line);
 	return (1);
 }
 

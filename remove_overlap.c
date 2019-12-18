@@ -6,7 +6,7 @@
 /*   By: aseppala <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:52:09 by aseppala          #+#    #+#             */
-/*   Updated: 2019/12/18 01:33:16 by aseppala         ###   ########.fr       */
+/*   Updated: 2019/12/18 01:54:31 by aseppala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,6 @@ int			remove_overlap(int pieces[27][11], int map_size, int i)
 				return (0);
 			j = 0;
 		}
-		/*ft_putnbr(i); //
-		write(1, "\n", 1); //
-		for (int k = 0; k < 11; k++)
-			ft_putnbr(pieces[i][k]); //
-		write(1, "\n", 1); */
 		if (remove_overlap(pieces, map_size, i + 1))
 			return (1);
 		if (!move_coord(pieces[i], 1, map_size))
