@@ -6,7 +6,7 @@
 #    By: aseppala <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/21 10:09:10 by aseppala          #+#    #+#              #
-#    Updated: 2019/12/18 02:09:53 by aseppala         ###   ########.fr        #
+#    Updated: 2019/12/18 02:48:02 by aseppala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,15 +27,10 @@ $(NAME):
 
 clean:
 	rm -f $(OBJ)
-	make -C libft clean
+	make -C libft/ clean
 
 fclean: clean
 	rm -f $(NAME)
-	make -C libft fclean
+	make -C libft/ fclean
 
 re: fclean all
-
-debug:
-	make -C libft/ fclean && make -C libft/
-	clang -g $(FLAGS) -I $(HDR) -c $(SRC)
-	clang -g -o $(NAME) $(OBJ) -I $(HDR) -L libft/ -lft

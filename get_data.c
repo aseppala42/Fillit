@@ -6,7 +6,7 @@
 /*   By: aseppala <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:48:04 by aseppala          #+#    #+#             */
-/*   Updated: 2019/12/18 02:42:59 by aseppala         ###   ########.fr       */
+/*   Updated: 2019/12/18 02:59:03 by aseppala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static int	is_error(char tet[5][5], int num_filled, int num_con, int i)
 		num_con += i % 4 ? tet[i / 4][i % 4 - 1] == '#' : 0;
 		num_con += i % 4 < 3 ? tet[i / 4][i % 4 + 1] == '#' : 0;
 	}
+	else if (tet[1 / 4][i % 4] != '.')
+		return (0);
 	return (is_error(tet, num_filled, num_con, i + 1));
 }
 
