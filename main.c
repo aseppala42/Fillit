@@ -6,7 +6,7 @@
 /*   By: aseppala <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:50:12 by aseppala          #+#    #+#             */
-/*   Updated: 2019/12/18 02:03:29 by aseppala         ###   ########.fr       */
+/*   Updated: 2019/12/18 02:15:55 by aseppala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	map_size_opt(int data[27][11])
 	int		map_size;
 	int		i;
 
-	map_size = 4;
+	map_size = 2;
 	i = 1;
 	while (data[i][0] != -1)
 		i++;
@@ -57,7 +57,7 @@ int			main(int ac, char **av)
 		ft_putstr("usage: ./fillit source_file\n");
 		return (0);
 	}
-	map_s = map_size_opt(data);
+	map_s = map_size_opt(data) - 1;
 	while (map_s++)
 		if (remove_overlap(data, map_s, 0) == 1)
 			break ;

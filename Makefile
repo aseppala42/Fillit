@@ -6,7 +6,7 @@
 #    By: aseppala <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/21 10:09:10 by aseppala          #+#    #+#              #
-#    Updated: 2019/12/17 21:22:37 by aseppala         ###   ########.fr        #
+#    Updated: 2019/12/18 02:09:53 by aseppala         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,9 +27,11 @@ $(NAME):
 
 clean:
 	rm -f $(OBJ)
+	make -C libft clean
 
 fclean: clean
 	rm -f $(NAME)
+	make -C libft fclean
 
 re: fclean all
 

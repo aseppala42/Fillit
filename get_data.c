@@ -6,7 +6,7 @@
 /*   By: aseppala <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 19:48:04 by aseppala          #+#    #+#             */
-/*   Updated: 2019/12/18 02:01:54 by aseppala         ###   ########.fr       */
+/*   Updated: 2019/12/18 02:42:59 by aseppala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,32 +31,21 @@ static void	set_coordinates(int data[11], char tet[5][5], int i)
 	}
 }
 
-static int	is_error(char tet[5][5])
+static int	is_error(char tet[5][5], int num_filled, int num_con, int i)
 {
-	int		num_filled;
-	int		i;
-	int		j;
-
-	num_filled = 0;
-	i = -1;
-	while (tet[++i][0])
+	if (num_filled > 4)
+		return (0);
+	if (i == 16)
+		return (num_con > 5);
+	if (tet[i / 4][i % 4] == '#')
 	{
-		j = -1;
-		while (tet[i][++j])
-		{
-			if (tet[i][j] == '#')
-			{
-				if (num_filled && (!i || tet[i - 1][j] != '#')
-						&& (!j || tet[i][j - 1] != '#')
-						&& (j == 3 || tet[i][j + 1] != '#'))
-					return (0);
-				num_filled++;
-			}
-			else if (tet[i][j] != '.')
-				return (0);
-		}
+		num_filled++;
+		num_con += i / 4 ? tet[i / 4 - 1][i % 4] == '#' : 0;
+		num_con += i / 4 < 3 ? tet[i / 4 + 1][i % 4] == '#' : 0;
+		num_con += i % 4 ? tet[i / 4][i % 4 - 1] == '#' : 0;
+		num_con += i % 4 < 3 ? tet[i / 4][i % 4 + 1] == '#' : 0;
 	}
-	return (num_filled == 4);
+	return (is_error(tet, num_filled, num_con, i + 1));
 }
 
 static void	data_init(int data[27][11])
@@ -115,7 +104,7 @@ int			get_data(int fd, int data[27][11])
 	{
 		if ((ret = get_next_tet(fd, tet)) == -1)
 			return (1);
-		if (!is_error(tet))
+		if (!is_error(tet, 0, 0, 0))
 			return (1);
 		if (i > 26)
 			return (1);
